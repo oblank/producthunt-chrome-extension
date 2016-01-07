@@ -138,6 +138,7 @@ let DefaultTab = React.createClass({
    */
 
   _openPane(url) {
+    debug("[-]open pane with url", url);
     this.setState({ url: url });
   },
 
@@ -146,6 +147,7 @@ let DefaultTab = React.createClass({
    */
 
   _closePane() {
+    debug("[x]close pane with url");
     this.setState({ url: false });
   },
 
