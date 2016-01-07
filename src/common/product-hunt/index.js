@@ -144,9 +144,7 @@ class ProductHunt {
       debug('invalid res...', res);
       return;
     }
-
-    console.log("get res", res);
-
+    debug("get res", res);
 
     if (res.status === 401) {
       debug('invalid access token, retrying...');
