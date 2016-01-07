@@ -51,7 +51,7 @@ class ProductHunt {
         .get(`${this.baseUrl}/v1/posts/all`)
         .query(query)
         .set('Authorization', `Bearer ${token}`)
-        .end((res) => {
+        .end((err, res) => {
           let retry = () => this.searchPosts(query, cb)
           this._handleResponse(res, retry, cb);
         });
@@ -76,7 +76,7 @@ class ProductHunt {
         .get(`${this.baseUrl}/v1/posts`)
         .query({ days_ago: daysAgo })
         .set('Authorization', `Bearer ${token}`)
-        .end((res) => {
+        .end((err, res) => {
           let retry = () => this.getPosts(daysAgo, cb)
           this._handleResponse(res, retry, cb);
         });
@@ -111,9 +111,9 @@ class ProductHunt {
     request
       .post(`${this.baseUrl}/v1/oauth/token`)
       .send(params)
-      .end((res) => {
+      .end((err, res) => {
         debug('oauth token response status: %d', res.status);
-        if (res.error) return cb(res.error);
+        if (err) return cb(err);
         let expiry = res.body.expires_in / 60;
         cache.set(this.cacheKey, res.body.access_token, expiry);
         cb(null, res.body.access_token);
@@ -140,6 +140,14 @@ class ProductHunt {
    */
 
   _handleResponse(res, retryFn, cb) {
+    if (!res) {
+      debug('invalid res...', res);
+      return;
+    }
+
+    console.log("get res", res);
+
+
     if (res.status === 401) {
       debug('invalid access token, retrying...');
       this._clearAuth();

@@ -78,7 +78,7 @@ let Pane = React.createClass({
     let closeClass = this.props.closeClass || '__phc-close';
     let loaderClass = this.props.loaderClass || '__phc-loader';
 
-    this.props.url = location.protocol === 'https:'
+    let url = location.protocol === 'https:'
       ? this.props.url.replace('http', 'https')
       : this.props.url;
 
@@ -95,7 +95,7 @@ let Pane = React.createClass({
 
         <div className={paneClass}>
           <div id="__phc-loader" className={loaderClass}></div>
-          <iframe src={this.props.url} id="__phc-product-pane" />
+          <iframe src={url} id="__phc-product-pane" />
         </div>
       </div>
     );

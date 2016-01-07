@@ -40,7 +40,7 @@ let Post = React.createClass({
         </div>
 
         <div className="container">
-          <div className="votes">
+          <div className="votes" onClick={this._onClick}>
             {post.votes_count}
           </div>
 

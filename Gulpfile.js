@@ -23,11 +23,11 @@ var gulpif = require('gulp-if');
 var gutil = require('gulp-util')
 var gwatch = require('gulp-watch');
 var harmonize = require('harmonize')();
-var html = require('gulp-minify-html');
+var html = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var jest = require('jest-cli');
 var json = require('gulp-jsonminify');
-var minifyCss = require('gulp-minify-css');
+var minifyCss = require('gulp-cssnano');
 var mocha = require('gulp-spawn-mocha');
 var neat = require('node-neat');
 var rimraf = require('rimraf');
@@ -106,7 +106,7 @@ gulp.task('js', function() {
   return bundles.map(function(bundle) {
     var bundler = browserify({
       entries: [bundle.entry],
-      transform: [envify, babelify],
+      transform: [envify, [babelify, {presets: ["es2015", "react"]}]],
       debug: DEV,
       cache: {},
       packageCache: {},
@@ -287,8 +287,8 @@ gulp.task('build', [
   'clean',
   'js',
   'html',
-  'locales',
   'manifest',
+  'locales',
   'scss',
   'img',
   'vendor'

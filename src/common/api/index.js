@@ -58,6 +58,7 @@ let api = {
     debug('getting posts from %d days ago', daysAgo);
 
     ph.getPosts(daysAgo, function(err, posts) {
+      debug('geted posts', posts);
       if (err) throw err;
       debug('posts received');
 

@@ -34,6 +34,6 @@ settings.get(BAR_DISABLED_KEY, function(disabled) {
     return;
   }
 
-  renderComponent(<ProductBar />);
+  renderComponent(<ProductBar />, false);
   api.getPost(location.href);
 });

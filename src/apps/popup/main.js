@@ -10,5 +10,5 @@ let Popup = require('./components/Popup.react');
 // will wait for the entire page to load (incl. the iframe) in order
 // to show the popup.
 setTimeout(function() {
-  renderComponent(<Popup />);
+  renderComponent(<Popup />, false);
 }, 0);

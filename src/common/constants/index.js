@@ -2,7 +2,7 @@
  * Dependencies.
  */
 
-let keyMirror = require('react/lib/keyMirror');
+let keyMirror = require('fbjs/lib/keyMirror');//require('react/lib/keyMirror');
 
 /**
  * Constants.
