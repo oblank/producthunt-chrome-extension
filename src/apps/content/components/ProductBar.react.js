@@ -3,6 +3,7 @@
  */
 
 let React = require('react');
+let ReactDOM = require('react-dom');
 let Frame = require('react-frame-component');
 let PostStore = require('../../../common/stores/PostStore');
 let BodyModifier = require('../../../common/body-modifier/BodyModifier.react');
@@ -127,7 +128,7 @@ let ProductBar = React.createClass({
    */
 
   _onCloseClick() {
-    let node = this.getDOMNode().parentNode;
+    let node = ReactDOM.findDOMNode(this).parentNode;
     React.unmountComponentAtNode(node);
   },
 

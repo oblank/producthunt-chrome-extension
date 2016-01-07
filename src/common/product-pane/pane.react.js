@@ -3,6 +3,7 @@
  */
 
 let React = require('react');
+let ReactDOM = require('react-dom');
 let Frame = require('react-frame-component');
 let debug = require('debug')('ph:product-pane');
 let BodyModifier = require('../body-modifier/BodyModifier.react');
@@ -52,8 +53,8 @@ let Pane = React.createClass({
   componentDidUpdate() {
     if (!this.props.url) return;
 
-    let iframe = this.getDOMNode().querySelector('#__phc-product-pane');
-    let loader = this.getDOMNode().querySelector('#__phc-loader');
+    let iframe = ReactDOM.findDOMNode(this).querySelector('#__phc-product-pane');
+    let loader = ReactDOM.findDOMNode(this).querySelector('#__phc-loader');
 
     iframe.onload = () => {
       debug('product pane loaded');

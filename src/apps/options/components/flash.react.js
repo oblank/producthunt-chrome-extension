@@ -3,6 +3,7 @@
  */
 
 let React = require('react');
+let ReactDOM = require('react-dom');
 
 /**
  * Flash Component.
@@ -31,7 +32,7 @@ let Flash = React.createClass({
    */
 
   componentWillUpdate(props) {
-    var el = this.getDOMNode();
+    var el = ReactDOM.findDOMNode(this);
 
     if (props.show) {
       el.classList.remove('hidden');

@@ -3,6 +3,7 @@
  */
 
 let React = require('react');
+let ReactDOM = require('react-dom');
 let Frame = require('react-frame-component');
 let debug = require('debug')('ph:popup:tab');
 
@@ -29,10 +30,10 @@ let Tab = React.createClass({
    */
 
   componentDidUpdate() {
-    this.getDOMNode().querySelector('iframe')
+    ReactDOM.findDOMNode(this).querySelector('iframe')
       .style.setProperty('display', 'none');
 
-    this.getDOMNode().querySelector('#loader')
+    ReactDOM.findDOMNode(this).querySelector('#loader')
       .style.setProperty('display', 'block');
   },
 
@@ -42,8 +43,8 @@ let Tab = React.createClass({
    */
 
   componentDidMount() {
-    let iframe = this.getDOMNode().querySelector('iframe');
-    let loader = this.getDOMNode().querySelector('#loader');
+    let iframe = ReactDOM.findDOMNode(this).querySelector('iframe');
+    let loader = ReactDOM.findDOMNode(this).querySelector('#loader');
 
     iframe.style.setProperty('display', 'none');
     loader.style.setProperty('display', 'block');
