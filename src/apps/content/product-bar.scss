@@ -55,7 +55,7 @@ body {
 
   .votes {
     background-color: #edeceb;
-    background-image: image-url("apps/content/assets/arrow_up.svg");
+    background-image: url("/apps/content/assets/arrow_up.svg");
     background-position: 10px 47%;
     background-size: 9px;
     background-repeat: no-repeat;
@@ -72,7 +72,7 @@ body {
 
   .comments {
     -webkit-font-smoothing: antialiased;
-    background-image: image-url("apps/content/assets/comment.svg");
+    background-image: url("/apps/content/assets/comment.svg");
     background-position: 10px 47%;
     background-size: 14px;
     background-repeat: no-repeat;
