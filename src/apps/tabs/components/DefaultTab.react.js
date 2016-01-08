@@ -11,6 +11,7 @@ let PostGroup = require('./PostGroup.react');
 let PostStore = require('../../../common/stores/PostStore');
 let api = require('../../../common/api');
 let Pane = require('../../../common/product-pane/Pane.react');
+let util = require('../../../common/util/util')
 
 /**
  * Constants.
@@ -56,6 +57,8 @@ let DefaultTab = React.createClass({
    */
 
   getInitialState() {
+    util.debugWithFuncName("getInitialState");
+
     this.cache = cache.get(CACHE_KEY);
 
     let firstPageCached = !!this.cache;
@@ -78,6 +81,8 @@ let DefaultTab = React.createClass({
    */
 
   componentWillMount() {
+    util.debugWithFuncName("componentWillMount");
+
     if (this.cache) {
       debug('using cache, refreshing it');
       this._loadNext(0);
@@ -89,7 +94,22 @@ let DefaultTab = React.createClass({
    */
 
   componentDidMount() {
+    util.debugWithFuncName("componentDidMount");
+
     PostStore.addChangeListener(this._handleChange);
+  },
+
+  //shouldComponentUpdate() {
+  //  util.debugWithFuncName("shouldComponentUpdate");
+  //  return true;
+  //},
+
+  componentWillUpdate() {
+    util.debugWithFuncName("componentWillUpdate");
+  },
+
+  componentDidUpdate() {
+    util.debugWithFuncName("componentDidUpdate");
   },
 
   /**
@@ -97,6 +117,8 @@ let DefaultTab = React.createClass({
    */
 
   componentWillUnmount() {
+    util.debugWithFuncName("componentWillUnmount");
+
     PostStore.removeChangeListener(this._handleChange);
   },
 
