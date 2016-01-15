@@ -34,7 +34,7 @@ let Post = React.createClass({
     let post = this.props.post;
 
     return (
-      <div className="product clickable" onClick={this._openPost}>
+      <div className="product clickable" onClick={this._onClick}>
         <div className="image">
           <img src={post.screenshot_url['300px']}/>
         </div>

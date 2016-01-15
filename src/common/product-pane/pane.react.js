@@ -79,6 +79,7 @@ let Pane = React.createClass({
     let closeClass = this.props.closeClass || '__phc-close';
     let loaderClass = this.props.loaderClass || '__phc-loader';
 
+    debug('url protocol', location.protocol);
     let url = location.protocol === 'https:'
       ? this.props.url.replace('http', 'https')
       : this.props.url;
