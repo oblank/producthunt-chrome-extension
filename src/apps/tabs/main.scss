@@ -81,9 +81,19 @@ header {
   overflow: hidden;
 }
 
+.left-sidebar {
+  z-index: 1;
+}
+
 .right-sidebar {
+  z-index: -1;
   left: 1320px; // 960 + 20 + 300 + 20
 }
+
+#githubBox {
+  padding: 10px;
+}
+
 
 .main {
   overflow-y: auto;
@@ -149,6 +159,45 @@ header {
   border-color: #a7b2a4;
   border-width: 2px;
   padding: 10px;
+}
+
+.repo-item {
+  margin-bottom: 20px;
+  line-height: 120%;
+}
+
+.repo-index {
+  color: #999;
+  margin-right: 10px;
+}
+
+.repo-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.repo-info {
+  font-size: 14px;
+}
+
+.repo-stars {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  justify-content: space-between;
+  color: #BBB !important;
+}
+
+.repo-star {
+  display: flex;
+  align-items: center;
+}
+
+.octicon {
+  fill: #BBB;
+  width: 12px;
 }
 
 .products {
