@@ -6,17 +6,17 @@
 
 // Variables
 
-$red:       #da552f;
-$yellow:    #fcf5e2;
-$brown-1:   #534540;
-$brown-2:   #685f5c;
-$grey-1:    #999999;
-$grey-2:    #eceae9;
-$grey-3:    #bbbbbb;
-$grey-4:    #dddddd;
-$grey-5:    #a9a29f;
-$cream-1:   #d5d2d0;
-$cream-2:   #a9a29f;
+$red: #da552f;
+$yellow: #fcf5e2;
+$brown-1: #534540;
+$brown-2: #685f5c;
+$grey-1: #999999;
+$grey-2: #eceae9;
+$grey-3: #bbbbbb;
+$grey-4: #dddddd;
+$grey-5: #a9a29f;
+$cream-1: #d5d2d0;
+$cream-2: #a9a29f;
 
 // Grid settings
 
@@ -29,12 +29,31 @@ body {
   font-family: 'proxima-nova', 'Proxima Nova', sans-serif;
 }
 
-.pane { @include product-pane; top: 0 !important; }
-.overlay { @include product-pane-overlay; }
-.close { @include product-pane-close; top: 15px !important; }
-.loader { @include product-pane-loader; }
-.no-scroll { overflow: hidden; }
-.clickable { cursor: pointer; }
+.pane {
+  @include product-pane;
+  top: 0 !important;
+}
+
+.overlay {
+  @include product-pane-overlay;
+}
+
+.close {
+  @include product-pane-close;
+  top: 15px !important;
+}
+
+.loader {
+  @include product-pane-loader;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
 
 header {
   @include main-header();
@@ -44,7 +63,30 @@ header {
   @include clearfix;
 }
 
+#container-box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.left-sidebar, .right-sidebar {
+  position: fixed;
+  top: 85px;
+  left: 20px;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  overflow: hidden;
+}
+
+.right-sidebar {
+  left: 1320px; // 960 + 20 + 300 + 20
+}
+
 .main {
+  overflow-y: auto;
   @include clearfix;
 
   @include media(500px) {
@@ -63,6 +105,24 @@ header {
     left: auto;
     right: auto;
   }
+}
+
+.block-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px;
+  color: #534540;
+  background: white;
+}
+
+.block-content {
+  background: #fafafa;
+  min-height: 300px;
+  max-height: 840px;
+  overflow-y: scroll;
+  height: 100%;
+  border-radius: 10px;
 }
 
 .products {
@@ -112,7 +172,9 @@ header {
       }
     }
 
-    .container { position: relative; }
+    .container {
+      position: relative;
+    }
 
     .votes {
       background-image: url('assets/arrow_up.svg');
