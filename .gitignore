@@ -7,3 +7,4 @@
 /.env.production
 /dev/
 *.pem
+.idea/
