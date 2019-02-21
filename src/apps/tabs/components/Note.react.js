@@ -5,22 +5,12 @@
 let React = require('react');
 var $ = require("jquery");
 const ReactMarkdown = require('react-markdown');
-let debug = require('debug')('ph:tabs:default-tab');
-let InfiniteScroll = require('react-infinite-scroll')(React);
 let cache = require('lscache');
-let async = require('async');
-let PostGroup = require('./PostGroup.react');
-let PostStore = require('../../../common/stores/PostStore');
-let api = require('../../../common/api');
-let Pane = require('../../../common/product-pane/Pane.react');
 let util = require('../../../common/util/util')
 
 /**
  * Constants.
  */
-
-const CACHE_KEY = process.env.PRODUCTS_CACHE_KEY;
-
 
 let Note = React.createClass({
 
@@ -33,7 +23,6 @@ let Note = React.createClass({
         getInitialState() {
             util.debugWithFuncName("getInitialState");
 
-            this.cache = cache.get(CACHE_KEY);
             return {
                 input: '双击开始编辑，支持MarkDown',
             };
