@@ -3,6 +3,8 @@
  */
 
 let React = require('react');
+var $ = require("jquery");
+const ReactMarkdown = require('react-markdown');
 let debug = require('debug')('ph:tabs:default-tab');
 let InfiniteScroll = require('react-infinite-scroll')(React);
 let cache = require('lscache');
@@ -20,137 +22,112 @@ let util = require('../../../common/util/util')
 const CACHE_KEY = process.env.PRODUCTS_CACHE_KEY;
 
 
-
 let Note = React.createClass({
 
-  /**
-   * Return initial state.
-   *
-   * @returns {Object}
-   */
+        /**
+         * Return initial state.
+         *
+         * @returns {Object}
+         */
 
-  getInitialState() {
-    util.debugWithFuncName("getInitialState");
+        getInitialState() {
+            util.debugWithFuncName("getInitialState");
 
-    this.cache = cache.get(CACHE_KEY);
+            this.cache = cache.get(CACHE_KEY);
+            return {
+                input: '双击开始编辑，支持MarkDown',
+            };
+        },
 
-    let firstPageCached = !!this.cache;
+        /**
+         * Before mounting the component, cache the current
+         * date.
+         */
 
-    // if we have cache, this means the first page has been already
-    // fetched, therefore start from the next one
-    let startPage = firstPageCached ? 0 : -1;
+        componentWillMount() {
+            util.debugWithFuncName("componentWillMount");
 
-    debug('start page: %d', startPage);
+            this.storageLoad('note', (value) => {
+                if (value && value.note) {
+                    this.setState({ input: value.note });
+                    $('#noteEditor').val(value.note)
+                }
+            })
+        },
 
-    return {
-      posts: this.cache || [],
-      startPage: startPage
-    };
-  },
+        /**
+         * On component mount, subscribe to post changes.
+         */
 
-  /**
-   * Before mounting the component, cache the current
-   * date.
-   */
+        componentDidMount() {
+            util.debugWithFuncName("componentDidMount");
 
-  componentWillMount() {
-    util.debugWithFuncName("componentWillMount");
+            // PostStore.addChangeListener(this._handleChange);
 
-  },
+            $("#noteContainer").click(() => {
+                $("#notes").hide();
+                $("#editor").show();
+                $('#noteEditor').focus();
+            });
 
-  /**
-   * On component mount, subscribe to post changes.
-   */
+            $("#noteEditor").blur(() => {
+                $("#notes").fadeIn();
+                $("#editor").hide();
+                this.storageSave($('#noteEditor').val());
+                this.setState({input: $('#noteEditor').val()})
+            });
+        },
 
-  componentDidMount() {
-    util.debugWithFuncName("componentDidMount");
 
-    // PostStore.addChangeListener(this._handleChange);
-  },
+        componentWillUpdate() {
+            util.debugWithFuncName("componentWillUpdate");
+        },
 
-  //shouldComponentUpdate() {
-  //  util.debugWithFuncName("shouldComponentUpdate");
-  //  return true;
-  //},
+        componentDidUpdate() {
+            util.debugWithFuncName("componentDidUpdate");
+        },
 
-  componentWillUpdate() {
-    util.debugWithFuncName("componentWillUpdate");
-  },
+        /**
+         * On component unmount, unsubscribe from post changes.
+         */
 
-  componentDidUpdate() {
-    util.debugWithFuncName("componentDidUpdate");
-  },
+        componentWillUnmount() {
+            util.debugWithFuncName("componentWillUnmount");
 
-  /**
-   * On component unmount, unsubscribe from post changes.
-   */
+            // PostStore.removeChangeListener(this._handleChange);
+        },
 
-  componentWillUnmount() {
-    util.debugWithFuncName("componentWillUnmount");
+        /**
+         * Render the view.
+         */
 
-    // PostStore.removeChangeListener(this._handleChange);
-  },
+        storageLoad(key, cb) {
+            chrome.storage.sync.get(key, cb);
+        },
 
-  /**
-   * Render the view.
-   */
+        storageSave(value) {
+            chrome.storage.sync.set({ 'note': value });
+        },
 
-  render() {
-    let url = this.state.url;
+        render() {
+            let input = this.state.input;
 
-    return (
-      <div>
-          <div id="notes" class="block-content">
-
-          </div>
-          <div id="editor" class="block-content">
-              <textarea id="noteEditor"></textarea>
-          </div>
-      </div>
-    );
-  },
-
-  /**
-   * Open the product pane.
-   *
-   * @param {String} url
-   */
-
-  _openPane(url) {
-    debug("[-]open pane with url", url);
-    this.setState({ url: url });
-  },
-
-  /**
-   * Close the product pane.
-   */
-
-  _closePane() {
-    debug("[x]close pane with url");
-    this.setState({ url: false });
-  },
-
-  /**
-   * Load next page (day) with posts.
-   *
-   * @param {Number} page
-   */
-
-  _loadNext(daysAgo) {
-    fetch.push(daysAgo);
-  },
-
-  /**
-   * Handle post change event.
-   */
-
-  _handleChange() {
-    this.setState({ posts: PostStore.getPosts() });
-  }
-});
+            return (
+                <div id="noteContainer">
+                    <div id="notes" class="block-content">
+                        <ReactMarkdown source={input}/>
+                    </div>
+                    <div id="editor" class="block-content">
+                        <textarea id="noteEditor"></textarea>
+                    </div>
+                </div>
+            );
+        }
+    })
+;
 
 /**
  * Export `DefaultTab`.
  */
 
-module.exports = DefaultTab;
+module.exports = Note;
