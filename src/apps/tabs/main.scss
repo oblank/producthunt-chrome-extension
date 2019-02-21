@@ -82,11 +82,11 @@ header {
 }
 
 .left-sidebar {
-  z-index: 1;
+  z-index: 2;
 }
 
 .right-sidebar {
-  z-index: -1;
+  z-index: 1;
   left: 1320px; // 960 + 20 + 300 + 20
 }
 
