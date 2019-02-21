@@ -50,6 +50,7 @@
     "browserify-shim": "^3.8.14",
     "debug": "2.1.0",
     "flux": "^2.0.1",
+    "jquery": "^3.3.1",
     "lscache": "^1.0.5",
     "moment": "^2.9.0",
     "node-bourbon": "^4.2.1-beta1",
@@ -58,6 +59,7 @@
     "react": "^0.14.6",
     "react-frame-component": "^0.4.1",
     "react-infinite-scroll": "^0.1.5",
+    "react-markdown": "^4.0.6",
     "superagent": "^1.6.1"
   },
   "jest": {
