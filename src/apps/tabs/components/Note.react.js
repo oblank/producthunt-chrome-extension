@@ -64,7 +64,7 @@ let Note = React.createClass({
 
             // PostStore.addChangeListener(this._handleChange);
 
-            $("#noteContainer").click(() => {
+            $("#noteContainer").dblclick(() => {
                 $("#notes").hide();
                 $("#editor").show();
                 $('#noteEditor').focus();
