@@ -103,10 +103,10 @@ let Note = React.createClass({
 
             return (
                 <div id="noteContainer">
-                    <div id="notes" class="block-content">
+                    <div id="notes" className="block-content">
                         <ReactMarkdown source={input}/>
                     </div>
-                    <div id="editor" class="block-content">
+                    <div id="editor" className="block-content">
                         <textarea id="noteEditor"></textarea>
                     </div>
                 </div>
