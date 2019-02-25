@@ -276,8 +276,8 @@ let Github = React.createClass({
 
     _openPane(url) {
         debug("[-]open pane with url", url);
-        this.setState({ url: url });
-        // this.setState({ url: 'https://baidu.com' });
+        // this.setState({ url: url });
+        chrome.tabs.create({ url: url });
     },
 
     /**
