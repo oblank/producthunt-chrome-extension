@@ -28,9 +28,17 @@ const OPTIONS_LANS = [
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' },
     { value: 'vue', label: 'Vue' },
+    { value: 'typescript', label: 'Typescript' },
+    { value: 'swift', label: 'Swift' },
     { value: 'graphql', label: 'GraphQL' },
     { value: 'c++', label: 'C++' },
-    { value: 'c', label: 'C' }
+    { value: 'c', label: 'C' },
+    { value: 'rust', label: 'Rust' },
+    { value: 'lua', label: 'Lua' },
+    { value: 'perl', label: 'Perl' },
+    { value: 'pod', label: 'Pod' },
+    { value: 'dart', label: 'Dart' },
+    { value: 'kotlin', label: 'Kotlin' }
 ];
 
 // daily, weekly and monthly
