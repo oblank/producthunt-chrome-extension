@@ -33,10 +33,11 @@ const OPTIONS_LANS = [
     { value: 'c', label: 'C' }
 ];
 
+// daily, weekly and monthly
 const OPTIONS_SINCE = [
-    { value: 'weekly', label: 'weekly' },
-    { value: 'Go', label: 'Go' },
-    { value: 'JavaScript', label: 'Javascript' }
+    { value: 'daily', label: 'Daily' },
+    { value: 'weekly', label: 'Weekly' },
+    { value: 'monthly', label: 'Monthly' }
 ];
 
 /**
@@ -67,6 +68,7 @@ let Github = React.createClass({
         return {
             posts    : this.cache || [],
             lang     : OPTIONS_LANS[ 0 ].value, // all
+            since    : OPTIONS_SINCE[ 0 ].value, // daily
             startPage: startPage
         };
     },
@@ -78,12 +80,25 @@ let Github = React.createClass({
 
     componentWillMount() {
         util.debugWithFuncName("componentWillMount");
-        this._loadNext();
 
         if (this.cache) {
             debug('using cache, refreshing it');
             this._loadNext();
         }
+
+        this.storageLoad('lang', (value) => {
+            console.log('lang', value)
+            if (value && value.lang) {
+                this.setState({ lang: value.lang }, () => this.fetch());
+            }
+        });
+
+        this.storageLoad('since', (value) => {
+            console.log('since', value);
+            if (value && value.since) {
+                this.setState({ since: value.since }, () => this.fetch());
+            }
+        })
     },
 
     /**
@@ -118,10 +133,9 @@ let Github = React.createClass({
     },
 
     fetch() {
-        console.log('{ language: this.state.lang, since: \'weekly\' }', { language: this.state.lang, since: 'weekly' })
         request
             .get(API_ADDR)
-            .query({ language: this.state.lang, since: 'weekly' })
+            .query({ language: this.state.lang, since: this.state.since })
             .end((err, res) => {
                 if (res.status !== 200) {
                     console.error(res);
@@ -134,7 +148,27 @@ let Github = React.createClass({
     },
 
     handleChange(event) {
-        this.setState({ lang: event.target.value }, () => this.fetch());
+        const value = event.target.value;
+        this.setState({ lang: value }, () => {
+            this.storageSave('lang', value);
+            this.fetch();
+        });
+    },
+
+    handleChangeSince(event) {
+        const value = event.target.value;
+        this.setState({ since: value }, () => {
+            this.storageSave('since', value);
+            this.fetch()
+        });
+    },
+
+    storageLoad(key, cb) {
+        chrome.storage.sync.get(key, cb);
+    },
+
+    storageSave(key, value) {
+        chrome.storage.sync.set({ [ key ]: value });
     },
 
     /**
@@ -184,13 +218,29 @@ let Github = React.createClass({
             <div>
                 <div className="block-header">
                     <h2 className="block-title">GitHub Trending</h2>
-                    <select className="block-select" onChange={this.handleChange}>
-                        {
-                            OPTIONS_LANS.map((option) => {
-                                return <option key={option.value} value={option.value}>{option.label}</option>
-                            })
-                        }
-                    </select>
+                    <div className="block-option-box">
+                        <select className="block-select" onChange={this.handleChange}>
+                            {
+                                OPTIONS_LANS.map((option) => {
+                                    if (option.value === this.state.lang) {
+                                        return <option key={option.value} value={option.value} selected>{option.label}</option>
+                                    }
+                                    return <option key={option.value} value={option.value}>{option.label}</option>
+                                })
+                            }
+                        </select>
+                        <span className="block-span-line">|</span>
+                        <select className="block-select" onChange={this.handleChangeSince}>
+                            {
+                                OPTIONS_SINCE.map((option) => {
+                                    if (option.value === this.state.since) {
+                                        return <option key={option.value} value={option.value} selected>{option.label}</option>
+                                    }
+                                    return <option key={option.value} value={option.value}>{option.label}</option>
+                                })
+                            }
+                        </select>
+                    </div>
                 </div>
                 <div className="block-content">
                     <div className="products">
