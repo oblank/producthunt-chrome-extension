@@ -217,23 +217,17 @@ let Github = React.createClass({
                 <div className="block-header">
                     <h2 className="block-title">GitHub Trending</h2>
                     <div className="block-option-box">
-                        <select className="block-select" onChange={this.handleChange}>
+                        <select className="block-select" value={this.state.lang} onChange={this.handleChange}>
                             {
                                 OPTIONS_LANS.map((option) => {
-                                    if (option.value === this.state.lang) {
-                                        return <option key={option.value} value={option.value} selected>{option.label}</option>
-                                    }
                                     return <option key={option.value} value={option.value}>{option.label}</option>
                                 })
                             }
                         </select>
                         <span className="block-span-line">|</span>
-                        <select className="block-select" onChange={this.handleChangeSince}>
+                        <select className="block-select" value={this.state.since} onChange={this.handleChangeSince}>
                             {
                                 OPTIONS_SINCE.map((option) => {
-                                    if (option.value === this.state.since) {
-                                        return <option key={option.value} value={option.value} selected>{option.label}</option>
-                                    }
                                     return <option key={option.value} value={option.value}>{option.label}</option>
                                 })
                             }
