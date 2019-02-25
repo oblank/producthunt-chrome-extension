@@ -89,22 +89,25 @@ let Github = React.createClass({
     componentWillMount() {
         util.debugWithFuncName("componentWillMount");
 
-        if (this.cache) {
-            debug('using cache, refreshing it');
-            this._loadNext();
-        }
+        // if (this.cache) {
+        //     debug('using cache, refreshing it');
+        //     // this._loadNext();
+        // }
 
         this.storageLoad('lang', (value) => {
             if (value && value.lang) {
-                this.setState({ lang: value.lang }, () => this.fetch());
+                this.setState({ lang: value.lang });
             }
+            this.storageLoad('since', (value) => {
+                if (value && value.since) {
+                    this.setState({ since: value.since }, () => this.fetch());
+                } else {
+                    this.fetch();
+                }
+            })
         });
 
-        this.storageLoad('since', (value) => {
-            if (value && value.since) {
-                this.setState({ since: value.since }, () => this.fetch());
-            }
-        })
+
     },
 
     /**
