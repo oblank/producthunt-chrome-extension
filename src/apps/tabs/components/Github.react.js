@@ -87,14 +87,12 @@ let Github = React.createClass({
         }
 
         this.storageLoad('lang', (value) => {
-            console.log('lang', value)
             if (value && value.lang) {
                 this.setState({ lang: value.lang }, () => this.fetch());
             }
         });
 
         this.storageLoad('since', (value) => {
-            console.log('since', value);
             if (value && value.since) {
                 this.setState({ since: value.since }, () => this.fetch());
             }
