@@ -61,7 +61,8 @@
     "react-infinite-scroll": "^0.1.5",
     "react-markdown": "^4.0.6",
     "react-select": "^2.4.1",
-    "superagent": "^1.6.1"
+    "superagent": "^1.6.1",
+    "year-progress": "^0.0.4"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

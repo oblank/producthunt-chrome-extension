@@ -4672,6 +4672,10 @@ lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/lodash.isarray/download/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
 
+lodash.isdate@^4.0.1:
+  version "4.0.1"
+  resolved "http://registry.npm.taobao.org/lodash.isdate/download/lodash.isdate-4.0.1.tgz#35a543673b9d76110de4114b32cc577048a7f366"
+
 lodash.isequal@^4.0.0:
   version "4.5.0"
   resolved "http://registry.npm.taobao.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
@@ -8041,6 +8045,12 @@ yazl@^2.1.0:
   resolved "http://registry.npm.taobao.org/yazl/download/yazl-2.5.1.tgz#a3d65d3dd659a5b0937850e8609f22fffa2b5c35"
   dependencies:
     buffer-crc32 "~0.2.3"
+
+year-progress@^0.0.4:
+  version "0.0.4"
+  resolved "http://registry.npm.taobao.org/year-progress/download/year-progress-0.0.4.tgz#a701831de3b5ba67cb7ff9147ac1f31afeb4886a"
+  dependencies:
+    lodash.isdate "^4.0.1"
 
 zip-stream@~0.5.0:
   version "0.5.2"

@@ -4,6 +4,7 @@
 
 let React = require('react');
 const $ = require("jquery");
+const yearProgress = require('year-progress');
 const ReactMarkdown = require('react-markdown');
 let util = require('../../../common/util/util');
 
@@ -36,7 +37,10 @@ let Note = React.createClass({
                     this.setState({ input: value.note });
                     $('#noteEditor').val(value.note)
                 }
-            })
+            });
+
+            const yearInProgress = yearProgress();
+
         },
 
         /**
@@ -58,7 +62,7 @@ let Note = React.createClass({
                 $("#notes").fadeIn();
                 $("#editor").hide();
                 this.storageSave($('#noteEditor').val());
-                this.setState({input: $('#noteEditor').val()})
+                this.setState({ input: $('#noteEditor').val() })
             });
         },
 
@@ -97,12 +101,22 @@ let Note = React.createClass({
             let input = this.state.input;
 
             return (
-                <div id="noteContainer">
-                    <div id="notes" className="block-content">
-                        <ReactMarkdown source={input}/>
+                <div>
+                    {/*<div className="block-title">TODOS</div>*/}
+                    <div className="block-header">
+                        <h2 className="block-title">TODOS</h2>
+                        <div className="block-option-box">
+                           90%
+                        </div>
                     </div>
-                    <div id="editor" className="block-content">
-                        <textarea id="noteEditor"></textarea>
+
+                    <div id="noteContainer">
+                        <div id="notes" className="block-content block-note">
+                            <ReactMarkdown source={input}/>
+                        </div>
+                        <div id="editor" className="block-content">
+                            <textarea id="noteEditor"></textarea>
+                        </div>
                     </div>
                 </div>
             );

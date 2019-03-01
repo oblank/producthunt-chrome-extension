@@ -11,7 +11,6 @@ let renderComponent = require('../../common/render');
 let loadGoogleAnalytics = require('../../common/google-analytics');
 let settings = require('../../common/settings');
 
-
 /**
  * Constants.
  */
