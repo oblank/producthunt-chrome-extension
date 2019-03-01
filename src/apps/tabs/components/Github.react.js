@@ -6,11 +6,7 @@ let React = require('react');
 let debug = require('debug')('ph:tabs:default-tab');
 let InfiniteScroll = require('react-infinite-scroll')(React);
 let cache = require('lscache');
-let async = require('async');
 let request = require('superagent');
-let PostGroup = require('./PostGroup.react');
-let PostStore = require('../../../common/stores/PostStore');
-let api = require('../../../common/api');
 let Pane = require('../../../common/product-pane/Pane.react');
 let util = require('../../../common/util/util')
 
@@ -88,11 +84,6 @@ let Github = React.createClass({
 
     componentWillMount() {
         util.debugWithFuncName("componentWillMount");
-
-        // if (this.cache) {
-        //     debug('using cache, refreshing it');
-        //     // this._loadNext();
-        // }
 
         this.storageLoad('lang', (value) => {
             if (value && value.lang) {
@@ -291,20 +282,10 @@ let Github = React.createClass({
         debug("[x]close pane with url");
         this.setState({ url: false });
     },
-
-    /**
-     * Load next page (day) with posts.
-     *
-     * @param {Number} page
-     */
-
-    _loadNext() {
-        this.fetch();
-    }
 });
 
 /**
- * Export `DefaultTab`.
+ * Export `Github`.
  */
 
 module.exports = Github;

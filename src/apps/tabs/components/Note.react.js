@@ -3,14 +3,9 @@
  */
 
 let React = require('react');
-var $ = require("jquery");
+const $ = require("jquery");
 const ReactMarkdown = require('react-markdown');
-let cache = require('lscache');
-let util = require('../../../common/util/util')
-
-/**
- * Constants.
- */
+let util = require('../../../common/util/util');
 
 let Note = React.createClass({
 
@@ -116,7 +111,7 @@ let Note = React.createClass({
 ;
 
 /**
- * Export `DefaultTab`.
+ * Export `Note`.
  */
 
 module.exports = Note;
