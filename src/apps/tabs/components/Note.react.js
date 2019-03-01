@@ -40,7 +40,9 @@ let Note = React.createClass({
             });
 
             const yearInProgress = yearProgress();
-
+            if (yearInProgress) {
+                this.setState({ progress: yearInProgress })
+            }
         },
 
         /**
@@ -106,7 +108,11 @@ let Note = React.createClass({
                     <div className="block-header">
                         <h2 className="block-title">TODOS</h2>
                         <div className="block-option-box">
-                           90%
+                            <div className="year-in-progress-title">Year in Progress</div>
+                            <div>
+                                <span className="year-in-progress">{this.state.progress.yearBar}</span>
+                                <span className="year-in-percent">{this.state.progress.percent || 0}%</span>
+                            </div>
                         </div>
                     </div>
 

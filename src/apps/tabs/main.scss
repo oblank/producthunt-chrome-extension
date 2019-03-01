@@ -174,6 +174,23 @@ header {
   padding-top: 5px;
 }
 
+.year-in-progress, .year-in-progress-title {
+  font-size: 9px;
+  line-height: 9px;
+  height: 9px;
+  color: #d5d5d5;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+.year-in-progress-title {
+  color: #999;
+}
+
+.year-in-percent {
+  color: #555;
+  margin-left: 5px;
+}
+
 #editor {
   display: none;
 }
