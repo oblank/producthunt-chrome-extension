@@ -15,7 +15,7 @@ let util = require('../../../common/util/util')
  */
 
 const CACHE_KEY = process.env.GITHUB_CACHE_KEY;
-const API_ADDR = 'https://github-trending-api.now.sh/repositories';
+const API_ADDR = 'https://trendings.herokuapp.com/repo';
 
 const OPTIONS_LANS = [
     { value: 'all', label: 'All' },
@@ -135,13 +135,13 @@ let Github = React.createClass({
     fetch() {
         request
             .get(API_ADDR)
-            .query({ language: this.state.lang, since: this.state.since })
+            .query({ lang: this.state.lang, since: this.state.since })
             .end((err, res) => {
                 if (res.status !== 200) {
                     console.error(res);
                 } else {
                     // console.log(res.body);
-                    cache.set(CACHE_KEY, res.body);
+                    cache.set(CACHE_KEY, res.body.items);
                     this.setState({ posts: res.body })
                 }
             });
@@ -180,12 +180,13 @@ let Github = React.createClass({
         let index = 0;
         let posts = this.state.posts.map((repo) => {
             index++;
+            repo.added_stars = parseInt(repo.added_stars);
 
-            return <div className="repo-item clickable" key={repo.name} onClick={() => {
-                this._openPane(repo.url)
+            return <div className="repo-item clickable" key={repo.repo} onClick={() => {
+                this._openPane(repo.repo_link)
             }}>
-                <div className="repo-title"><span className="repo-index">{index}.</span>{repo.name}</div>
-                <div className="repo-info">{repo.description}</div>
+                <div className="repo-title"><span className="repo-index">{index}.</span>{repo.repo}</div>
+                <div className="repo-info">{repo.desc}</div>
                 <div className="repo-stars">
                     <div className="repo-star">
                         <svg aria-label="star" className="octicon octicon-star" viewBox="0 0 14 16" version="1.1" width="14" height="16"
@@ -207,7 +208,7 @@ let Github = React.createClass({
                     </div>
                     <div className="repo-star">
 
-                        + {repo.currentPeriodStars}
+                        + {repo.added_stars}
                     </div>
                 </div>
             </div>
