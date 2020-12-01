@@ -33,7 +33,6 @@
     "*://www.producthunt.com/*",
     "*://www.github.com/*",
     "*://*.github.com/*",
-    "*://*github.com/*",
     "*://*.gist.com/*",
     "webRequestBlocking",
     "storage",
