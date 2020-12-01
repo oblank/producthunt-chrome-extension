@@ -12,7 +12,6 @@ process.env.EXT_ENV = process.env.EXT_ENV || 'development';
  */
 
 var babelify = require('babelify');
-var bourbon = require('node-bourbon');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var envc = require('envc')({ nodeenv: process.env.EXT_ENV || process.env.NODE_ENV });
@@ -22,12 +21,11 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util')
 var gwatch = require('gulp-watch');
-var harmonize = require('harmonize')();
-var html = require('gulp-htmlmin');
+var html = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 var jest = require('jest-cli');
 var json = require('gulp-jsonminify');
-var minifyCss = require('gulp-cssnano');
+var minifyCss = require('gulp-minify-css');
 var mocha = require('gulp-spawn-mocha');
 var neat = require('node-neat');
 var rimraf = require('rimraf');
@@ -81,9 +79,7 @@ var dest = 'build' || argv.build;
 var bundles = [
   { entry: './src/apps/popup/main.js', out: 'apps/popup/main.js' },
   { entry: './src/apps/background/main.js', out: 'apps/background/main.js' },
-  { entry: './src/apps/content/main.js', out: 'apps/content/main.js' },
   { entry: './src/apps/tabs/main.js', out: 'apps/tabs/main.js' },
-  { entry: './src/apps/options/main.js', out: 'apps/options/main.js' }
 ];
 
 /**
@@ -106,24 +102,23 @@ gulp.task('js', function() {
   return bundles.map(function(bundle) {
     var bundler = browserify({
       entries: [bundle.entry],
-      transform: [envify, [babelify, {presets: ["es2015", "react"]}]],
       debug: DEV,
       cache: {},
       packageCache: {},
       fullPaths: true
-    });
+    }).transform(babelify, {presets: ['es2015', 'react']}).transform(envify);
 
     bundler.on('log', gutil.log)
 
     var update = function() {
       return bundler.bundle()
-        .on('error', function(err) {
-          gutil.log(err.message);
-        })
-        .pipe(source(bundle.out))
-        .pipe(buffer())
-        .pipe(gulpif(!DEV, uglify()))
-        .pipe(gulp.dest(dest));
+          .on('error', function(err) {
+            gutil.log(err.message);
+          })
+          .pipe(source(bundle.out))
+          .pipe(buffer())
+          .pipe(gulpif(!DEV, uglify()))
+          .pipe(gulp.dest(dest));
     };
 
     if (argv.watch) {
@@ -141,9 +136,9 @@ gulp.task('js', function() {
 
 gulp.task('html', function() {
   return gulp.src(patterns.html)
-    .pipe(watch(patterns.html))
-    .pipe(html())
-    .pipe(gulp.dest(dest));
+      .pipe(watch(patterns.html))
+      .pipe(html())
+      .pipe(gulp.dest(dest));
 });
 
 /**
@@ -152,8 +147,8 @@ gulp.task('html', function() {
 
 gulp.task('vendor', function() {
   return gulp.src(patterns.vendor)
-    .pipe(watch(patterns.vendor))
-    .pipe(gulp.dest(dest + '/vendor'));
+      .pipe(watch(patterns.vendor))
+      .pipe(gulp.dest(dest + '/vendor'));
 });
 
 /**
@@ -162,9 +157,9 @@ gulp.task('vendor', function() {
 
 gulp.task('locales', function() {
   return gulp.src(patterns.locales)
-    .pipe(watch(patterns.locales))
-    .pipe(json())
-    .pipe(gulp.dest(dest + '/_locales/'));
+      .pipe(watch(patterns.locales))
+      .pipe(json())
+      .pipe(gulp.dest(dest + '/_locales/'));
 });
 
 /**
@@ -193,16 +188,16 @@ gulp.task('scss', function() {
   var paths = neat.includePaths.concat(['./src']);
 
   return gulp.src(patterns.css)
-    .pipe(watch(patterns.css))
-    .pipe(gulpif(DEV, sourcemaps.init()))
-    .pipe(sass({
-      imagePath: 'chrome-extension://' + env.EXTENSION_ID,
-      includePaths: paths,
-      errLogToConsole: true
-    }))
-    .pipe(gulpif(DEV, sourcemaps.write()))
-    .pipe(gulpif(!DEV, minifyCss()))
-    .pipe(gulp.dest(dest));
+      .pipe(watch(patterns.css))
+      .pipe(gulpif(DEV, sourcemaps.init()))
+      .pipe(sass({
+        imagePath: 'chrome-extension://' + env.EXTENSION_ID,
+        includePaths: paths,
+        errLogToConsole: true
+      }))
+      .pipe(gulpif(DEV, sourcemaps.write()))
+      .pipe(gulpif(!DEV, minifyCss()))
+      .pipe(gulp.dest(dest));
 });
 
 /**
@@ -211,9 +206,9 @@ gulp.task('scss', function() {
 
 gulp.task('img', function() {
   return gulp.src(patterns.img)
-    .pipe(watch(patterns.img))
-    .pipe(imagemin())
-    .pipe(gulp.dest(dest));
+      .pipe(watch(patterns.img))
+      // .pipe(imagemin())
+      .pipe(gulp.dest(dest));
 });
 
 /**
@@ -222,7 +217,7 @@ gulp.task('img', function() {
 
 gulp.task('test-acceptance', function() {
   return gulp.src(['test/*.js'], { read: false })
-    .pipe(mocha({ r: 'test/setup.js', timeout: 10000 }));
+      .pipe(mocha({ r: 'test/setup.js', timeout: 10000 }));
 });
 
 /**
@@ -234,8 +229,10 @@ gulp.task('test-unit', function(done) {
     config: {
       rootDir: __dirname,
       testPathDirs: [__dirname + '/src'],
-      scriptPreprocessor: __dirname + '/node_modules/babel-jest/index.js',
-      setupEnvScriptFile: __dirname + '/jest/env.js',
+      transform: {
+        '.*': "<rootDir>/node_modules/babel-jest",
+      },
+      setupFiles: [__dirname + '/jest/env.js'],
       setupTestFrameworkScriptFile: __dirname + '/jest/setup.js'
     }
   };
@@ -253,8 +250,8 @@ gulp.task('pack', function() {
   var version = require('./src/manifest.json').version;
 
   return gulp.src(dest + '/**/*')
-    .pipe(zip(version + '-product-hunt.zip'))
-    .pipe(gulp.dest('dist'));
+      .pipe(zip(version + '-product-hunt.zip'))
+      .pipe(gulp.dest('dist'));
 });
 
 /**
@@ -287,9 +284,9 @@ gulp.task('build', [
   'clean',
   'js',
   'html',
-  'manifest',
   'locales',
+  'manifest',
   'scss',
-  'img',
+  // 'img',
   'vendor'
 ]);
