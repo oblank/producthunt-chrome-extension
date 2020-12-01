@@ -19,13 +19,13 @@ const API_ADDR = 'https://trendings.herokuapp.com/repo';
 
 const OPTIONS_LANS = [
     // { value: 'all', label: 'All' },
+    { value: 'swift', label: 'Swift' },
     { value: 'go', label: 'Go' },
-    { value: 'php', label: 'PHP' },
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' },
+    { value: 'php', label: 'PHP' },
     { value: 'vue', label: 'Vue' },
     { value: 'typescript', label: 'Typescript' },
-    { value: 'swift', label: 'Swift' },
     { value: 'graphql', label: 'GraphQL' },
     { value: 'c++', label: 'C++' },
     { value: 'c', label: 'C' },
@@ -140,9 +140,9 @@ let Github = React.createClass({
                 if (!res.status.toString().startsWith('20')) {
                     console.error(res);
                 } else {
-                    // console.log(res.body);
+                    console.log(res.body);
                     cache.set(CACHE_KEY, res.body.items);
-                    this.setState({ posts: res.body })
+                    this.setState({ posts: res.body.items })
                 }
             });
     },
@@ -185,7 +185,7 @@ let Github = React.createClass({
             return <div className="repo-item clickable" key={repo.repo} onClick={() => {
                 this._openPane(repo.repo_link)
             }}>
-                <div className="repo-title"><span className="repo-index">{index}.</span>{repo.repo}</div>
+                <div className="repo-title"><span className="repo-index">{index}.</span>{repo.repo.split('/')[1]}</div>
                 <div className="repo-info">{repo.desc}</div>
                 <div className="repo-stars">
                     <div className="repo-star">
