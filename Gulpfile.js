@@ -289,6 +289,6 @@ gulp.task('build', [
   'locales',
   'manifest',
   'scss',
-  // 'img',
+  'img',
   'vendor'
 ]);
