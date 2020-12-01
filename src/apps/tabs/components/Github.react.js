@@ -18,7 +18,7 @@ const CACHE_KEY = process.env.GITHUB_CACHE_KEY;
 const API_ADDR = 'https://trendings.herokuapp.com/repo';
 
 const OPTIONS_LANS = [
-    { value: 'all', label: 'All' },
+    // { value: 'all', label: 'All' },
     { value: 'go', label: 'Go' },
     { value: 'php', label: 'PHP' },
     { value: 'java', label: 'Java' },
@@ -137,7 +137,7 @@ let Github = React.createClass({
             .get(API_ADDR)
             .query({ lang: this.state.lang, since: this.state.since })
             .end((err, res) => {
-                if (res.status !== 200) {
+                if (!res.status.toString().startsWith('20')) {
                     console.error(res);
                 } else {
                     // console.log(res.body);
