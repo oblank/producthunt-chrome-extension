@@ -124,7 +124,7 @@ let Quote = React.createClass({
             const name = item.symbol.toUpperCase().replace("USDT", "");
             const price = new Number(item.close).toFixed(2);
             const amount = new Number(item.close - item.open).toFixed(2);
-            const spread = new Number((item.close - item.open)/item.open * 100).toFixed(3);
+            const spread = new Number((item.close - item.open)/item.open * 100).toFixed(2);
             const color = amount > 0 ? "crypto-item quote-red" : "crypto-item quote-green";
             return <div className={color} key={item.symbol}>
                     {/*<div className="quote-channel">{item.channel[1]}</div>*/}
