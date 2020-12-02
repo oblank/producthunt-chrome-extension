@@ -404,24 +404,27 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .quote-item {
   display: flex;
   flex-direction: row;
-  width: 30%;
+  width: 33%;
+  border-left: 1px dotted #EFEFEF;
 }
 
 .quote-channel {
-  font-size: 5px;
+  font-size: 7px;
   padding: 1px;
+  background: #999;
 }
 
 .quote-name {
   font-size: 10px;
   width: 70px;
   overflow: hidden;
+  padding-left: 2px;
 }
 
 .quote-price {

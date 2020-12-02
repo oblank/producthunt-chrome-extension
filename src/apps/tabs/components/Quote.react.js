@@ -134,7 +134,7 @@ let Quote = React.createClass({
         let posts = this.state.quote.map((item) => {
             const color = parseFloat(item.sellPrice.amount) > 0 ? "quote-item quote-red" : "quote-item quote-green";
             return <div className={color} key={item.gmCode}>
-                    <div className="quote-channel">{item.channel[1]}</div>
+                    {/*<div className="quote-channel">{item.channel[1]}</div>*/}
                 <div className="quote-name">{item.name}</div>
                     <div className="quote-price">{item.sellPrice.price}</div>
                 <div className="quote-info">{item.sellPrice.amount} / {item.sellPrice.spread}</div>
