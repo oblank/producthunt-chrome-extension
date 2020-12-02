@@ -101,6 +101,7 @@ header {
 
 .left-sidebar {
   z-index: 2;
+  top: 35px;
 }
 
 .right-sidebar {
@@ -392,6 +393,7 @@ header {
 
 #quoteBox {
   width: 65%;
+  font-family: "PingFang SC", "Microsoft Yahei", monospace;
 }
 
 .quote-content  {
@@ -425,6 +427,7 @@ header {
   width: 70px;
   overflow: hidden;
   padding-left: 2px;
+  font-weight: 400;
 }
 
 .quote-price {
@@ -432,6 +435,10 @@ header {
   font-weight: bold;
   width: 40px;
   overflow: hidden;
+}
+
+.quote-info {
+  font-weight: 300;
 }
 
 .quote-red {

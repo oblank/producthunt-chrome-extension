@@ -61,6 +61,10 @@ let Quote = React.createClass({
 
     componentDidMount() {
         util.debugWithFuncName("componentDidMount");
+
+        setInterval(() => {
+            this.fetch();
+        }, 1000);
     },
 
     //shouldComponentUpdate() {
