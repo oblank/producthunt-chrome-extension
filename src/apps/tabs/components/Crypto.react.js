@@ -101,6 +101,16 @@ let Quote = React.createClass({
                         return;
                     }
                     const quote = res.body.data;
+                    quote.sort((a, b) => {
+                        if (a.symbol < b.symbol ) {
+                            return -1;
+                        }
+                        if (a.symbol > b.symbol ) {
+                            return 1;
+                        }
+                        // a must be equal to b
+                        return 0;
+                    });
                     cache.set(CACHE_KEY, quote);
                     this.setState({ quote: quote })
                 }
