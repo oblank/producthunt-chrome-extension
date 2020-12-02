@@ -412,6 +412,7 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  max-height: 50px;
 }
 
 .quote-item, .crypto-item {
