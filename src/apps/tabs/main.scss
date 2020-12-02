@@ -66,6 +66,13 @@ body {
   cursor: pointer;
 }
 
+.main-head-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 header {
   @include main-header();
 }
@@ -170,7 +177,7 @@ header {
 
 .block-content {
   background: #fafafa;
-  min-height: 300px;
+  //min-height: 100px;
   max-height: 750px;
   overflow-y: scroll;
   //height: 100%;
@@ -380,4 +387,54 @@ header {
   font-weight: bold;
   padding: 40px;
   text-align: center;
+}
+
+
+#quoteBox {
+  width: 65%;
+}
+
+.quote-content  {
+  font-size: 9px;
+  font-weight: lighter;
+  line-height: 170%;
+}
+
+.quotes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.quote-item {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+}
+
+.quote-channel {
+  font-size: 5px;
+  padding: 1px;
+}
+
+.quote-name {
+  font-size: 10px;
+  width: 70px;
+  overflow: hidden;
+}
+
+.quote-price {
+  font-size: 10px;
+  font-weight: 500;
+  width: 40px;
+  overflow: hidden;
+}
+
+.quote-red {
+  color: red;
+}
+
+.quote-green {
+  color: green;
 }

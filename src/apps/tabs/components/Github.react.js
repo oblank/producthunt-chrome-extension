@@ -8,7 +8,7 @@ let InfiniteScroll = require('react-infinite-scroll')(React);
 let cache = require('lscache');
 let request = require('superagent');
 let Pane = require('../../../common/product-pane/Pane.react');
-let util = require('../../../common/util/util')
+let util = require('../../../common/util/util');
 
 /**
  * Constants.
