@@ -14,8 +14,8 @@ let util = require('../../../common/util/util');
  * Constants.
  */
 
-const CACHE_KEY = process.env.QUOTE_CACHE_KEY;
-const API_ADDR = 'https://public-api.jjh9999.com/bm-base/goldPrice/getGoldPrice';
+const CACHE_KEY = process.env.CRYPTO_CACHE_KEY;
+const API_ADDR = 'https://www.huobi.com/-/x/pro/market/overview5?r=v2lyqpj&x-b3-traceid=d91f820c18f3ee0b786a6169ef793813';
 
 // 只显示过滤掉的数据
 const FilterPrices = [ 'windPrice', 'lmePrice', 'hkexPrice'];
@@ -100,22 +100,7 @@ let Quote = React.createClass({
                     if (!res.body.data) {
                         return;
                     }
-                    const tmpData = res.body.data;
-                    const quote = [];
-                    FilterPrices.forEach((channel) => {
-                        if (tmpData && !tmpData[channel]) {
-                            return
-                        }
-                        tmpData[channel].forEach((item) => {
-                            if(item.gmCode.includes('AU') || item.name.includes("黄金") || item.name.includes("伦敦金")) {
-                                if (parseInt(item.sellPrice.price || 0) > 10) {
-                                    item.channel = channel;
-                                    quote.push(item);
-                                }
-                            }
-                        })
-                    });
-                    // console.log('quote', quote);
+                    const quote = res.body.data;
                     cache.set(CACHE_KEY, quote);
                     this.setState({ quote: quote })
                 }
@@ -136,19 +121,22 @@ let Quote = React.createClass({
 
     render() {
         let posts = this.state.quote.map((item) => {
-            const color = parseFloat(item.sellPrice.amount) > 0 ? "quote-item quote-red" : "quote-item quote-green";
-            return <div className={color} key={item.gmCode}>
+            const name = item.symbol.toUpperCase().replace("USDT", "");
+            const amount = new Number(item.close - item.open).toFixed(2);
+            const spread = new Number((item.close - item.open)/item.open).toFixed(3);
+            const color = amount > 0 ? "crypto-item quote-red" : "crypto-item quote-green";
+            return <div className={color} key={item.symbol}>
                     {/*<div className="quote-channel">{item.channel[1]}</div>*/}
-                <div className="quote-name">{item.name}</div>
-                    <div className="quote-price">{item.sellPrice.price}</div>
-                <div className="quote-info">{item.sellPrice.amount} / {item.sellPrice.spread}</div>
+                <div className="quote-name">{name}</div>
+                    <div className="quote-price">{item.close}</div>
+                <div className="quote-info">{amount} / {spread}%</div>
             </div>
         });
 
         return (
             <div>
                 <div className="quote-content clickable block-content" onClick={() => {
-                    this._openPane("https://lite.jjh9999.com/monitor")
+                    this._openPane("https://huobi.pro")
                 }}>
                     <div className="quotes">
                         {posts}

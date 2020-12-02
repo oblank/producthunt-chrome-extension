@@ -392,7 +392,12 @@ header {
 
 
 #quoteBox {
-  width: 65%;
+  width: 49%;
+  font-family: "PingFang SC", "Microsoft Yahei", monospace;
+}
+
+#cryptoBox {
+  width: 49%;
   font-family: "PingFang SC", "Microsoft Yahei", monospace;
 }
 
@@ -409,13 +414,16 @@ header {
   justify-content: space-between;
 }
 
-.quote-item {
+.quote-item, .crypto-item {
   display: flex;
   flex-direction: row;
-  width: 33%;
+  width: 50%;
   border-left: 1px dotted #EFEFEF;
 }
 
+.crypto-item {
+  width: 50%;
+}
 .quote-channel {
   font-size: 7px;
   padding: 1px;
