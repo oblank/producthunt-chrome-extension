@@ -122,13 +122,14 @@ let Quote = React.createClass({
     render() {
         let posts = this.state.quote.map((item) => {
             const name = item.symbol.toUpperCase().replace("USDT", "");
+            const price = new Number(item.close).toFixed(2);
             const amount = new Number(item.close - item.open).toFixed(2);
-            const spread = new Number((item.close - item.open)/item.open).toFixed(3);
+            const spread = new Number((item.close - item.open)/item.open * 100).toFixed(3);
             const color = amount > 0 ? "crypto-item quote-red" : "crypto-item quote-green";
             return <div className={color} key={item.symbol}>
                     {/*<div className="quote-channel">{item.channel[1]}</div>*/}
                 <div className="quote-name">{name}</div>
-                    <div className="quote-price">{item.close}</div>
+                    <div className="quote-price">{price}</div>
                 <div className="quote-info">{amount} / {spread}%</div>
             </div>
         });
